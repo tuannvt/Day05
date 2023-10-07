@@ -1,5 +1,6 @@
 package mvc.main;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import mvc.configuration.JPAConfig;
 import mvc.entity.OrderDetailsEntity;
@@ -22,7 +23,9 @@ public class MainOrders {
 //        readOrderDetails();
 //        findByIdOrderDetail(2);
 //        totalOrderDetail();
-        searchOrder("Ng");
+//        searchOrder("Ng");
+//        updateDate();
+        deleteCustomerName("Phong");
     }
     public static void readOrderDetails(){
         List<OrderDetailsEntity>orderDetailsEntityList=(List<OrderDetailsEntity>)orderDetailsRepository.findAll();
@@ -47,6 +50,31 @@ public class MainOrders {
     public static void searchOrder(String customerName){
         List<OrdersEntity>list=orderRepository.findByCustomerNameContaining(customerName);
         for (OrdersEntity orders:list){
+            System.out.println(orders.toString());
+        }
+    }
+    public static void updateDate(){
+        List<OrdersEntity>list=(List<OrdersEntity>)orderRepository.findAll();
+        for (OrdersEntity orders:list){
+            if (orders.getOrderDate().isBefore(LocalDate.now())){
+                orders.setOrderDate(LocalDate.now());
+                orderRepository.save(orders);
+            }
+        }
+        List<OrdersEntity>list1=(List<OrdersEntity>)orderRepository.findAll();
+        for (OrdersEntity orders:list1){
+            System.out.println(orders.toString());
+        }
+    }
+    public static void deleteCustomerName(String customerName){
+        List<OrdersEntity>list=orderRepository.findByCustomerNameContaining(customerName);
+        int id=0;
+        for (OrdersEntity orders:list){
+            id=orders.getId();
+        }
+        orderRepository.deleteById(id);
+        List<OrdersEntity>list1=(List<OrdersEntity>)orderRepository.findAll();
+        for (OrdersEntity orders:list1){
             System.out.println(orders.toString());
         }
     }
