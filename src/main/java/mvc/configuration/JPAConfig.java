@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package configuration;
+package mvc.configuration;
 
+import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -16,21 +19,16 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
-
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "repository")
+@EnableJpaRepositories(basePackages = "mvc")
 public class JPAConfig {
 
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/Day04?characterEncoding=UTF-8");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/Day07?characterEncoding=UTF-8");
         dataSource.setUsername("root");
         dataSource.setPassword("");
         return dataSource;
@@ -40,7 +38,7 @@ public class JPAConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPackagesToScan("entity");
+        entityManagerFactoryBean.setPackagesToScan("mvc");
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setJpaProperties(additionalProperties());
 
@@ -69,17 +67,4 @@ public class JPAConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    // Set bean AccountService with platform transaction manager
-//    @Bean
-//    public AccountService accountService(JpaTransactionManager jpaTransactionManager){
-//        AccountService accountService = new AccountService(jpaTransactionManager);
-//        return accountService;
-//    }
-//
-//    // Set bean AccountService using Annatation
-//    @Bean
-//    public AccountService accountService(){
-//        AccountService accountService = new AccountService();
-//        return accountService;
-//    }
 }
