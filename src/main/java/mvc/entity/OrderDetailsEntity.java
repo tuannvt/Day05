@@ -1,4 +1,4 @@
-package entity;
+package mvc.entity;
 
 import javax.persistence.*;
 
@@ -70,6 +70,8 @@ public class OrderDetailsEntity {
                 ", productName="+productName+'\''+
                 ", quantity="+quantity+'\''+
                 ", unitPrice="+unitPrice+'\''+
-                ", orders="+orders +'}';
+                ", orderID="+orders.getId() +'\''+
+                ", orderCustomerName="+orders.getCustomerName() +'\''+
+                ", orderCustomerAddress="+orders.getCustomerAddress() +'\''+'}';
     }
 }

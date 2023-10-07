@@ -1,13 +1,13 @@
-package main;
+package mvc.main;
 
-import configuration.JPAConfig;
-import entity.BookDetailEntity;
-import entity.BookEntity;
-import entity.CategoryEntity;
+import mvc.configuration.JPAConfig;
+import mvc.entity.BookDetailEntity;
+import mvc.entity.BookEntity;
+import mvc.entity.CategoryEntity;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import repository.BookRepository;
-import repository.CategoryRepository;
+import mvc.repository.BookRepository;
+import mvc.repository.CategoryRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,12 +18,16 @@ public class Main {
     static CategoryRepository categoryRepository = (CategoryRepository) context.getBean("categoryRepository");
 
     public static void main(String[] args) {
-//        createNewBookEntityNewCategory();
-//        createNewBookEntry();
-//        findByAuthor("Roger");
+        createNewBookEntityNewCategory();
+        createNewBookEntry();
+        findByAuthor("Roger");
 //        findByNameAndAuthor("Linux","Roger");
 //        findByNameOrAuthor("Linux","Roger");
-        findByBookDetailsIsbn("ISIBF12345");
+//        findByBookDetailsIsbn("ISIBF12345");
+//        findByBookDetailsPriceLessThan(65.0);     // < x
+//        findByBookDetailsPriceLessThanEqual(55.0);// <= x
+//        findByBookDetailsPriceGreaterThanEqual(75);// >= x
+//        findByNameContaining("Ja");
     }
     public static void createNewBookEntry(){
         CategoryEntity categoryEntity=new CategoryEntity();
@@ -88,10 +92,38 @@ public class Main {
         }
     }
     public static void findByBookDetailsIsbn(String isbn){
-        BookEntity bookEntity=bookRepository.findByBookDetailsIsbn(isbn);
+        List<BookEntity>  bookEntity=bookRepository.findByBookDetailsIsbn(isbn);
         if (bookEntity!=null){
             System.out.println("\nFind  book wich isbn= "+isbn);
                 System.out.println(bookEntity.toString());
+        }
+    }
+    public static void findByBookDetailsPriceLessThan(double price){
+        List<BookEntity>  bookEntity=bookRepository.findByBookDetailsPriceLessThan(price);
+        if (bookEntity!=null){
+            System.out.println("\nFind  book wich isbn= "+bookEntity.size());
+            System.out.println(bookEntity.toString());
+        }
+    }
+    public static void findByBookDetailsPriceLessThanEqual(double price){
+        List<BookEntity>  bookEntity=bookRepository.findByBookDetailsPriceLessThanEqual(price);
+        if (bookEntity!=null){
+            System.out.println("\nFind  book wich isbn= "+bookEntity.size());
+            System.out.println(bookEntity.toString());
+        }
+    }
+    public static void findByBookDetailsPriceGreaterThanEqual(double price){
+        List<BookEntity>  bookEntity=bookRepository.findByBookDetailsPriceGreaterThanEqual(price);
+        if (bookEntity!=null){
+            System.out.println("\nFind  book wich isbn= "+bookEntity.size());
+            System.out.println(bookEntity.toString());
+        }
+    }
+    public static void findByNameContaining(String name){
+        List<BookEntity>  bookEntity=bookRepository.findByNameContaining(name);
+        if (bookEntity!=null){
+            System.out.println("\nFind  book wich isbn= "+bookEntity.size());
+            System.out.println(bookEntity.toString());
         }
     }
 }

@@ -1,6 +1,4 @@
-package entity;
-
-import org.springframework.format.annotation.DateTimeFormat;
+package mvc.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;

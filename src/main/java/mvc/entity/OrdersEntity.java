@@ -1,9 +1,8 @@
-package entity;
+package mvc.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -20,11 +19,12 @@ public class OrdersEntity {
     private String customerAddress;
 
     @OneToMany(mappedBy = "orders",fetch = FetchType.EAGER)
-    private List<OrderDetailsEntity> orderDetailsEntityList;
+    private List<OrderDetailsEntity> orderDetailsEntityList=new ArrayList<>();
 
     public OrdersEntity(){
 
     }
+
     public int getId() {
         return id;
     }
@@ -64,12 +64,15 @@ public class OrdersEntity {
     public void setOrderDetailsEntityList(List<OrderDetailsEntity> orderDetailsEntityList) {
         this.orderDetailsEntityList = orderDetailsEntityList;
     }
+
     @Override
     public String toString(){
         return "OrdersEntity {"+
                 "id="+id +
                 ", orderDate="+orderDate+'\''+
                 ", customerName="+customerName+'\''+
-                ", customerAddress="+customerAddress +'}';
+                ", customerAddress="+customerAddress +'\''+
+//                ", orderDetailsEntityList="+orderDetailsEntityList +
+                '}';
     }
 }
